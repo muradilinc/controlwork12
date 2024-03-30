@@ -1,11 +1,11 @@
 node_modules
+public
 .editorconfig
-.eslintrc.js
-.gitignore
+.eslintrc.cjs
+.prettierignore
 .prettierrc
-nest-cli.json
-package-lock.json
 package.json
+package-lock.json
 README.md
 tsconfig.json
-tsconfig.build.json
+tsconfig.node.json
