@@ -55,6 +55,30 @@ export class SeedsService {
         image: '/fixtures/images/post1.avif',
       },
     ]);
+
+    await this.postModel.create([
+      {
+        author: user2._id,
+        title: 'Margarita',
+        image: '/fixtures/images/post1.avif',
+      },
+    ]);
+
+    await this.postModel.create([
+      {
+        author: user2._id,
+        title: 'Margarita',
+        image: '/fixtures/images/post1.avif',
+      },
+    ]);
+
+    await this.postModel.create([
+      {
+        author: user2._id,
+        title: 'Margarita',
+        image: '/fixtures/images/ps5.png',
+      },
+    ]);
   }
 
   async clearDatabase() {

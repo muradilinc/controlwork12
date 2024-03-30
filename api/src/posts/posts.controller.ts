@@ -72,10 +72,10 @@ export class PostsController {
   getAll(@Query('userId') userId: string) {
     if (userId) {
       return this.postModel
-        .find({ user: userId })
-        .populate('user', 'displayName');
+        .find({ author: userId })
+        .populate('author', 'displayName');
     } else {
-      return this.postModel.find().populate('user', 'displayName');
+      return this.postModel.find().populate('author', 'displayName');
     }
   }
 

@@ -2,6 +2,8 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
+  Param,
   Post,
   Req,
   UnauthorizedException,
@@ -95,6 +97,15 @@ export class UsersController {
 
     return {
       message: 'Login with google successful!',
+      user,
+    };
+  }
+
+  @Get(':id')
+  async getUsers(@Param('id') id: string) {
+    const user = await this.userModel.findOne({ _id: id });
+    return {
+      message: 'Found!',
       user,
     };
   }

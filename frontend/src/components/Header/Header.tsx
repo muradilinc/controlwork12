@@ -22,7 +22,7 @@ const Header = () => {
                     admin
                   </Link>
                 ) : null}
-                <Link className="capitalize" to="person-images">
+                <Link className="capitalize" to={'/person-image/' + user._id}>
                   my images
                 </Link>
                 <h4 className="font-bold">{user.displayName}</h4>

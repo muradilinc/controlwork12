@@ -20,3 +20,15 @@ export interface LoginMutation {
   email: string;
   password: string;
 }
+
+export interface Post {
+  _id: string;
+  title: string;
+  author: User;
+  image: string;
+}
+
+export interface PostMutation {
+  title: string;
+  image: File | null;
+}
