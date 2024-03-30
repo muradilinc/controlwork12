@@ -57,6 +57,8 @@ export class PostsController {
         author: createPost.author,
         image: file ? '/uploads/images/' + file.filename : null,
       });
+      await post.save();
+      return post;
     } catch (error) {
       if (error instanceof mongoose.Error.ValidationError) {
         throw new UnprocessableEntityException(error);
@@ -67,7 +69,7 @@ export class PostsController {
   }
 
   @Get()
-  getAll(@Query('userId') userId: string, @Query('admin') admin: boolean) {
+  getAll(@Query('userId') userId: string) {
     if (userId) {
       return this.postModel
         .find({ user: userId })

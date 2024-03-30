@@ -24,6 +24,12 @@ import { SeedsService } from './seeds/seeds.service';
     PassportModule,
   ],
   controllers: [AppController, UsersController, PostsController],
-  providers: [AppService, AuthService, LocalStrategy, TokenAuthGuard, SeedsService],
+  providers: [
+    AppService,
+    AuthService,
+    LocalStrategy,
+    TokenAuthGuard,
+    SeedsService,
+  ],
 })
 export class AppModule {}

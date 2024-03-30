@@ -38,6 +38,15 @@ export class SeedsService {
         displayName: 'godjo',
       },
     ]);
+
+    await this.postModel.create([
+      {
+        author: user1._id,
+        title: 'Margarita',
+        image: '/fixtures/images/post1.avif',
+      },
+    ]);
+
     await this.postModel.create([
       {
         author: user2._id,
