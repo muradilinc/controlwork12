@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
 import { Post } from '../../types';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { selectUser } from '../../store/users/usersSlice';
+import { deletePost, getPosts } from '../../store/posts/postsThunk';
 
 interface Props {
   post: Post;
 }
 
 const PostItem: React.FC<Props> = ({ post }) => {
+  const user = useAppSelector(selectUser);
+  const { pathname } = useLocation();
   const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useAppDispatch();
 
   const openDialog = () => {
     setIsOpen(true);
@@ -15,6 +21,15 @@ const PostItem: React.FC<Props> = ({ post }) => {
 
   const closeDialog = () => {
     setIsOpen(false);
+  };
+
+  const deletePostHandle = async (id: string) => {
+    await dispatch(deletePost(id)).unwrap();
+    if (user?.role !== 'admin') {
+      await dispatch(getPosts(user?._id));
+    } else {
+      await dispatch(getPosts());
+    }
   };
 
   return (
@@ -37,6 +52,17 @@ const PostItem: React.FC<Props> = ({ post }) => {
             </Link>
           </p>
         </div>
+        {(pathname !== '/' && user?._id === post.author._id) ||
+        user?.role === 'admin' ? (
+          <div className="px-6 pt-4 pb-2">
+            <button
+              className="bg-[#ef233c] py-[5px] px-[10px] text-white text-[18px] capitalize rounded-[8px]"
+              onClick={() => deletePostHandle(post._id)}
+            >
+              delete
+            </button>
+          </div>
+        ) : null}
       </div>
       {isOpen && (
         <div className="fixed z-10 inset-0 overflow-y-auto">

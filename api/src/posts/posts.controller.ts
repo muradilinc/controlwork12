@@ -85,7 +85,7 @@ export class PostsController {
   }
 
   @UseGuards(TokenAuthGuard, PermitAuthGuard)
-  @SetMetadata('roles', 'admin')
+  @SetMetadata('roles', 'admin, user')
   @Delete(':id')
   deleteCocktail(@Param('id') id: string) {
     return this.postModel.findByIdAndDelete(id);

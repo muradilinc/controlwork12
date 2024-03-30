@@ -23,7 +23,7 @@ const PersonImagesPage = () => {
     if (user?._id !== id) {
       dispatch(getOneUser(id));
     }
-  }, [dispatch, id, user?._id]);
+  }, [dispatch, id, user]);
 
   useEffect(() => {
     if (guest) {
@@ -31,7 +31,7 @@ const PersonImagesPage = () => {
     } else if (user?._id === id) {
       dispatch(getPosts(user._id));
     }
-  }, [dispatch, guest, id, user?._id]);
+  }, [dispatch, guest, id, user]);
 
   if (loading) {
     return <Spinner />;

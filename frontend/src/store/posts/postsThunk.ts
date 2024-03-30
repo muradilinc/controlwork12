@@ -45,7 +45,7 @@ export const getPosts = createAsyncThunk<Post[], string | undefined>(
 );
 
 export const getOneUser = createAsyncThunk<AuthResponse, string>(
-  'users/getOne',
+  'posts/getOne',
   async (id) => {
     try {
       const response = await axiosApi.get(`/users/${id}`);
@@ -61,5 +61,12 @@ export const getOneUser = createAsyncThunk<AuthResponse, string>(
 
       throw error;
     }
+  },
+);
+
+export const deletePost = createAsyncThunk<void, string>(
+  'posts/deletePost',
+  async (id) => {
+    await axiosApi.delete(`/posts/${id}`);
   },
 );

@@ -17,11 +17,6 @@ const Header = () => {
           {user ? (
             <>
               <div className="flex gap-x-3 items-center">
-                {user.role === 'admin' ? (
-                  <Link className="capitalize" to="admin">
-                    admin
-                  </Link>
-                ) : null}
                 <Link className="capitalize" to={'/person-image/' + user._id}>
                   my images
                 </Link>
