@@ -11,6 +11,7 @@ import { LocalStrategy } from './auth/local-strategy';
 import { TokenAuthGuard } from './auth/token-auth.guard';
 import { PostsController } from './posts/posts.controller';
 import { PostItem, PostItemSchema } from './schemas/post.schema';
+import { SeedsService } from './seeds/seeds.service';
 
 @Module({
   imports: [
@@ -23,6 +24,6 @@ import { PostItem, PostItemSchema } from './schemas/post.schema';
     PassportModule,
   ],
   controllers: [AppController, UsersController, PostsController],
-  providers: [AppService, AuthService, LocalStrategy, TokenAuthGuard],
+  providers: [AppService, AuthService, LocalStrategy, TokenAuthGuard, SeedsService],
 })
 export class AppModule {}
