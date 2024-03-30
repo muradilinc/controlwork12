@@ -6,6 +6,9 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from './schemas/user.schema';
 import { PassportModule } from '@nestjs/passport';
+import { AuthService } from './auth/auth.service';
+import { LocalStrategy } from './auth/local-strategy';
+import { TokenAuthGuard } from './auth/token-auth.guard';
 
 @Module({
   imports: [
@@ -15,6 +18,6 @@ import { PassportModule } from '@nestjs/passport';
     PassportModule,
   ],
   controllers: [AppController, UsersController],
-  providers: [AppService],
+  providers: [AppService, AuthService, LocalStrategy, TokenAuthGuard],
 })
 export class AppModule {}
