@@ -16,7 +16,7 @@ import { Request } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { TokenAuthGuard } from '../auth/token-auth.guard';
 import { OAuth2Client } from 'google-auth-library';
-import process from 'process';
+import * as process from 'process';
 import crypto from 'crypto';
 
 const client = new OAuth2Client(

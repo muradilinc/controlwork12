@@ -9,15 +9,20 @@ import { PassportModule } from '@nestjs/passport';
 import { AuthService } from './auth/auth.service';
 import { LocalStrategy } from './auth/local-strategy';
 import { TokenAuthGuard } from './auth/token-auth.guard';
+import { PostsController } from './posts/posts.controller';
+import { PostItem, PostItemSchema } from './schemas/post.schema';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     MongooseModule.forRoot('mongodb://localhost/pinterest'),
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    MongooseModule.forFeature([
+      { name: User.name, schema: UserSchema },
+      { name: PostItem.name, schema: PostItemSchema },
+    ]),
     PassportModule,
   ],
-  controllers: [AppController, UsersController],
+  controllers: [AppController, UsersController, PostsController],
   providers: [AppService, AuthService, LocalStrategy, TokenAuthGuard],
 })
 export class AppModule {}
