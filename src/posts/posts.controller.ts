@@ -35,7 +35,7 @@ export class PostsController {
   @UseInterceptors(
     FileInterceptor('image', {
       storage: diskStorage({
-        destination: './public/uploads/cocktails',
+        destination: './public/uploads/images',
         filename(
           _req: express.Request,
           file: Express.Multer.File,

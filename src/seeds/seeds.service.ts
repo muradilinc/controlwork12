@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from '../schemas/user.schema';
 import { Model } from 'mongoose';
 import { PostItem, PostItemDocument } from '../schemas/post.schema';
+import { randomUUID } from 'crypto';
 
 @Injectable()
 export class SeedsService {
@@ -17,7 +18,7 @@ export class SeedsService {
     await this.userModel.create({
       email: 'admin@admin.com',
       password: 'admin',
-      token: crypto.randomUUID(),
+      token: randomUUID(),
       role: 'admin',
       displayName: 'vito',
     });
@@ -26,14 +27,14 @@ export class SeedsService {
       {
         email: 'vito@mafia.com',
         password: 'joe',
-        token: crypto.randomUUID(),
+        token: randomUUID(),
         role: 'user',
         displayName: 'joe',
       },
       {
         email: 'muradil@muradil.com',
         password: 'muradil',
-        token: crypto.randomUUID(),
+        token: randomUUID(),
         role: 'user',
         displayName: 'godjo',
       },
