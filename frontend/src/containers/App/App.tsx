@@ -6,10 +6,23 @@ import RegisterPage from '../Register/RegisterPage';
 import LoginPage from '../Login/LoginPage';
 import PersonImagesPage from '../PersonImages/PersonImagesPage';
 import NewPost from '../NewPost/NewPost';
+import { ToastContainer } from 'react-toastify';
 
 const App = () => {
   return (
-    <div>
+    <>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <Layout>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -20,7 +33,7 @@ const App = () => {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Layout>
-    </div>
+    </>
   );
 };
 

@@ -3,6 +3,7 @@ import { useAppDispatch } from '../../app/hooks';
 import { useNavigate } from 'react-router-dom';
 import { createPost } from '../../store/posts/postsThunk';
 import { PostMutation } from '../../types';
+import { toast } from 'react-toastify';
 
 const NewPost = () => {
   const [state, setState] = useState<PostMutation>({
@@ -56,6 +57,10 @@ const NewPost = () => {
 
   const createPostHandle = async (event: FormEvent) => {
     event.preventDefault();
+    if (state.image === null) {
+      toast.error('Choose image please!');
+      return false;
+    }
     await dispatch(createPost(state)).unwrap();
     navigate('/');
   };
