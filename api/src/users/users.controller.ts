@@ -11,13 +11,13 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from '../schemas/user.schema';
 import mongoose, { Model } from 'mongoose';
-import { CreateUserDto } from './create-user.dto';
+import { CreateUserDto, GoogleData } from './create-user.dto';
 import { Request } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { TokenAuthGuard } from '../auth/token-auth.guard';
 import { OAuth2Client } from 'google-auth-library';
 import * as process from 'process';
-import crypto from 'crypto';
+import { randomUUID } from 'crypto';
 
 const client = new OAuth2Client(
   process.env.GOOGLE_CLIENT_ID,
@@ -61,9 +61,9 @@ export class UsersController {
   }
 
   @Post('google')
-  async googleLogin(@Body() credential: string) {
+  async googleLogin(@Body() data: GoogleData) {
     const ticket = await client.verifyIdToken({
-      idToken: credential,
+      idToken: data.credential,
       audience: process.env.GOOGLE_CLIENT_ID,
     });
 
@@ -75,7 +75,6 @@ export class UsersController {
     const email = payload['email'];
     const id = payload['sub'];
     const displayName = payload['name'];
-    const avatar = payload['picture'];
 
     if (!email) {
       return UnauthorizedException;
@@ -85,10 +84,9 @@ export class UsersController {
     if (!user) {
       user = new this.userModel({
         email: email,
-        password: crypto.randomUUID(),
+        password: randomUUID(),
         googleID: id,
         displayName,
-        avatar,
       });
     }
 
