@@ -1,29 +1,39 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from '../schemas/user.schema';
-import { Model } from 'mongoose';
 import { PostItem, PostItemDocument } from '../schemas/post.schema';
 import { randomUUID } from 'crypto';
+import mongoose, { Model } from 'mongoose';
+
+const DB_URL = 'mongodb://localhost/pinterest';
 
 @Injectable()
-export class SeedsService {
+export class DataService {
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     @InjectModel(PostItem.name) private postModel: Model<PostItemDocument>,
-  ) {}
+  ) {
+    void this.createFixtureData();
+  }
 
-  async run() {
-    await this.clearDatabase();
+  async dropCollection(db: mongoose.Connection, collectionName: string) {
+    try {
+      await db.dropCollection(collectionName);
+    } catch (e) {
+      console.log(
+        `Collection ${collectionName} was missing. skipping drop ...`,
+      );
+    }
+  }
 
-    await this.userModel.create({
-      email: 'admin@admin.com',
-      password: 'admin',
-      token: randomUUID(),
-      role: 'admin',
-      displayName: 'vito',
-    });
-
-    const [user1, user2] = await this.userModel.create([
+  async createFixtureData() {
+    await mongoose.connect(DB_URL);
+    const db = mongoose.connection;
+    const collections = ['artists', 'albums', 'tracks', 'users'];
+    for (const collectionName of collections) {
+      await this.dropCollection(db, collectionName);
+    }
+    const [user1, user2, user3] = await this.userModel.create(
       {
         email: 'vito@mafia.com',
         password: 'joe',
@@ -38,7 +48,7 @@ export class SeedsService {
         role: 'user',
         displayName: 'godjo',
       },
-    ]);
+    );
 
     await this.postModel.create([
       {
@@ -46,43 +56,28 @@ export class SeedsService {
         title: 'Margarita',
         image: '/fixtures/images/post1.avif',
       },
-    ]);
-
-    await this.postModel.create([
       {
         author: user2._id,
         title: 'Margarita',
         image: '/fixtures/images/post1.avif',
       },
-    ]);
-
-    await this.postModel.create([
       {
         author: user2._id,
         title: 'Margarita',
         image: '/fixtures/images/post1.avif',
       },
-    ]);
-
-    await this.postModel.create([
       {
         author: user2._id,
         title: 'Margarita',
         image: '/fixtures/images/post1.avif',
       },
-    ]);
-
-    await this.postModel.create([
       {
         author: user2._id,
         title: 'Margarita',
         image: '/fixtures/images/ps5.png',
       },
     ]);
-  }
 
-  async clearDatabase() {
-    await Promise.all([this.userModel.deleteMany({})]);
-    await Promise.all([this.postModel.deleteMany({})]);
+    await db.close();
   }
 }
